@@ -7,7 +7,7 @@ class Plant:
     def show(self) -> None:
         print(f"{self.name}: {self.height}cm, {self.age} days old")
 
-    def g_height(self) -> None:
+    def grow(self) -> None:
         self.height = round(self.height + 0.8, 1)
 
     def g_age(self) -> None:
@@ -15,7 +15,7 @@ class Plant:
 
 
 def main() -> None:
-    Plants = [
+    plants = [
         Plant("Rose", 25.0, 30),
         Plant("Oak", 200.0, 365),
         Plant("Cactus", 5.0, 90),
@@ -24,7 +24,7 @@ def main() -> None:
     ]
 
     print("=== Plant Factory Output ===")
-    for n in Plants:
+    for n in plants:
         print("Created: ", end="")
         n.show()
 
