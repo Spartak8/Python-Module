@@ -1,18 +1,21 @@
-def input_temperature(temp_str: str) -> int:
-    return int(temp_str)
+def input_temperature(temp_str: str) -> int | None:
+    try:
+        return int(temp_str)
+    except ValueError as e:
+        print(f"Caught input_temperature error: {e}")
+        return None
+
 
 def test_temperature() -> None:
     print("=== Garden Temperature ===")
+    print()
     print("Input data is '25'")
     x = input_temperature("25")
     print(f"Temperature is now {x}°C")
     print()
     print("Input data is 'abc'")
-    try:
-        input_temperature("abc")
-    except ValueError as e:
-        print(f"Caught input_temperature error: {e}")
-        print()
+    input_temperature("abc")
+    print()
     print("All tests completed - program didn't crash!")
 
 

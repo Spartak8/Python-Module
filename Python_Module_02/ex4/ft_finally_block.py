@@ -13,7 +13,7 @@ def water_plant(plant_name: str) -> None:
         print(f"Watering {plant_name}: [OK]")
     else:
         raise PlantError(f"Invalid plant name to water: '{plant_name}'")
-    
+
 
 def test_watering_system() -> None:
     print("=== Garden Watering System ===")

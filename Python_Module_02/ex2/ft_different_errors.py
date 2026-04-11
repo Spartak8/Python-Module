@@ -1,12 +1,12 @@
 def garden_operations(operation_number: int) -> None:
     if operation_number == 0:
-        int("abc")        
+        int("abc")
     elif operation_number == 1:
-        i = 10 / 0
+        10 / 0
     elif operation_number == 2:
         open("khj")
     elif operation_number == 3:
-        x = "abc" + 10
+        "abc" + 10
     elif operation_number == 4:
         return
 
@@ -38,7 +38,7 @@ def test_error_types() -> None:
     print("Operation completed successfully")
     print()
     print("All error types tested successfully!")
-    
+
 
 if __name__ == "__main__":
     test_error_types()
