@@ -7,6 +7,7 @@ class DataProcessor(ABC):
     def __init__(self) -> None:
         self._storage: list[str] = []
         self._total = 0
+        self.name: str = ""
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -26,9 +27,10 @@ class ExportPlugin(Protocol):
     def process_output(self, data: list[tuple[int, str]]) -> None:
         pass
 
+
 class DataStream:
     def __init__(self) -> None:
-        self.processors = []
+        self.processors: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
         self.processors.append(proc)
@@ -54,7 +56,7 @@ class DataStream:
             remaining = len(proc._storage)
             print(f"{name}: total {total} items processed, "
                   f"remaining {remaining} on processor")
-            
+
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
         for proc in self.processors:
             result = []
@@ -67,6 +69,7 @@ class DataStream:
 
 class NumericProcessor(DataProcessor):
     name = "Numeric Processor"
+
     def validate(self, data: Any) -> bool:
         if isinstance(data, list):
             return all(isinstance(x, (int, float)) and not isinstance(x, bool)
@@ -87,6 +90,7 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
     name = "Text Processor"
+
     def validate(self, data: Any) -> bool:
         if isinstance(data, list):
             return all(isinstance(x, str) for x in data)
@@ -106,6 +110,7 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     name = "Log Processor"
+
     def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
             keys_ok = all(isinstance(k, str) for k in data.keys())
@@ -147,7 +152,7 @@ class JSONExportPlugin:
         pairs = []
         for k, v in result.items():
             pairs.append(f'"{k}": "{v}"')
-        print("{" + ",".join(pairs) + "}")
+        print("{" + ", ".join(pairs) + "}")
 
 
 if __name__ == "__main__":
@@ -165,14 +170,17 @@ if __name__ == "__main__":
     d_stream.register_processor(text_p)
     d_stream.register_processor(log_p)
     print()
-    print("Send first batch of data on stream: ['Hello world', [3.14, -1, 2.71], [{'log_level': 'WARNING', '"
-          "log_message': 'Telnet access! Use ssh instead'}, {'log_level': 'INFO', 'log_message': 'User wil is"
+    print("Send first batch of data on stream: ['Hello world', "
+          "[3.14, -1, 2.71],[{'log_level': 'WARNING', '"
+          "log_message': 'Telnet access! Use ssh instead'}, "
+          "{'log_level': 'INFO', 'log_message': 'User wil is"
           "connected'}], 42, ['Hi', 'five']]")
     data = ['Hello world',
-            [3.14, -1, 2.71], 
-            [{'log_level': 'WARNING', 'log_message': 'Telnet access! Use ssh instead'}, 
+            [3.14, -1, 2.71],
+            [{'log_level': 'WARNING',
+              'log_message': 'Telnet access! Use ssh instead'},
              {'log_level': 'INFO', 'log_message': 'User wil is connected'}],
-            42, 
+            42,
             ['Hi', 'five']]
     d_stream.process_stream(data)
     d_stream.print_processors_stats()
@@ -183,18 +191,22 @@ if __name__ == "__main__":
     print()
     d_stream.print_processors_stats()
     print()
-    print("Send another batch of data: [21, ['I love AI', 'LLMs are wonderful', 'Stay healthy'], [{'log_level': '"
-          "ERROR', 'log_message': '500 server crash'}, {'log_level': 'NOTICE', 'log_message': 'Certificate"
+    print("Send another batch of data: [21, ['I love AI', "
+          "'LLMs are wonderful', 'Stay healthy'], [{'log_level': '"
+          "ERROR', 'log_message': '500 server crash'},"
+          "{'log_level': 'NOTICE', 'log_message': 'Certificate"
           "expires in 10 days'}], [32, 42, 64, 84, 128, 168], 'World hello']")
     print()
-    data1 =  [21,
-               ['I love AI', 'LLMs are wonderful', 'Stay healthy'], 
-               [{'log_level': 'ERROR', 'log_message': '500 server crash'}, 
-                {'log_level': 'NOTICE', 'log_message': 'Certificate expires in 10 days'}],
-               [32, 42, 64, 84, 128, 168],
-               'World hello']
+    data1 = [21,
+             ['I love AI', 'LLMs are wonderful', 'Stay healthy'],
+             [{'log_level': 'ERROR', 'log_message': '500 server crash'},
+              {'log_level': 'NOTICE',
+               'log_message': 'Certificate expires in 10 days'}],
+             [32, 42, 64, 84, 128, 168],
+             'World hello']
     d_stream.process_stream(data1)
     d_stream.print_processors_stats()
+    print()
     print("Send 5 processed data from each processor to a JSON plugin:")
     json = JSONExportPlugin()
     d_stream.output_pipeline(5, json)
