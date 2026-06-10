@@ -1,6 +1,6 @@
 # 🐍 Python Module — School 42
 
-> A structured Python learning curriculum completed at **School 42** (login: `skhachat`).  
+> A structured Python learning curriculum completed at **School 42** by `skhachat`.  
 > Each module focuses on a distinct set of concepts, building progressively from basics to advanced patterns.
 
 ---
