@@ -189,15 +189,17 @@ Runtime data validation using Pydantic v2 models.
 ---
 
 ### Module 10 — Functional Programming
-> **Theme:** Arcane Magic
+> **Theme:** FuncMage Chronicles
 
-Lambdas, higher-order functions, and closures with `nonlocal`.
+Mastery of functional programming patterns: lambdas, higher-order functions, closures, `functools`, and decorators.
 
 | Exercise | File | Concepts |
 |----------|------|----------|
-| ex0 | `lambda_spells.py` | `lambda`, `sorted`, `filter`, `map`, `max`, `min` |
-| ex1 | `higher_magic.py` | Higher-order functions: `spell_combiner`, `power_amplifier`, `conditional_caster` |
-| ex2 | `scope_mysteries.py` | Closures, `nonlocal`, counter & accumulator factories |
+| ex0 | `lambda_spells.py` | `lambda`, `sorted`, `filter`, `map`, `max`, `min` — anonymous functions for data transformation |
+| ex1 | `higher_magic.py` | Higher-order functions: `spell_combiner`, `power_amplifier`, `conditional_caster`, `spell_sequence` |
+| ex2 | `scope_mysteries.py` | Closures, `nonlocal`, counter & accumulator factories, `memory_vault` |
+| ex3 | `functools_artifacts.py` | `functools.reduce`, `functools.partial`, `lru_cache`, `singledispatch`, `operator` module |
+| ex4 | `decorator_mastery.py` | Decorators: `spell_timer`, `power_validator`, `retry_spell`, `functools.wraps`, `@staticmethod` |
 
 Support script: `data_generator.py` — test data generator for all exercises.
 
